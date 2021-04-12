@@ -1,64 +1,86 @@
+
 'use strict';
-function getRandomIntInclusive (min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(Math.random() * (max-min+1)) + min;
+class Figure {
+  constructor (name) {
+    this.name = name;
+  }
+  _validateSide(newValue) {
+    if (typeof newValue !== 'number') {
+      throw new TypeError();
+    }
+    if (newValue <= 0) {
+      throw new RangeError();
+    }
+  }
+  getArea() {}
 }
 
-const numsArr = [];
-for (let i = 0; i<10; i++){
-  numsArr.push(getRandomIntInclusive(100, 200));
+class Triangle extends Figure {
+  constructor (a, b, angle) {
+    super ('Triangle');
+    this. a = a;
+    this. b = b;
+    this. angle = angle;
+  }
+  get a() {
+    return this._a;
+  }
+  set a(newValue) {
+    this._validateSide(newValue);
+    this._a = newValue;
+  }
+  get b() {
+    return this._b;
+  }
+  set b (newValue) {
+    this._validateSide(newValue);
+    this._b = newValue;
+  }
+  get angle () {
+    return this._angle;
+  }
+  set angle (newValue) {
+    this._validateSide(newValue);
+    this._angle = newValue;
+  }
+  getArea () {
+    return this. a * this. b * Math.sin(this.angle / 180 * Math.PI)
+  }
 }
 
-function User(firstName, lastName, email, age, isMale, isSubscribed = false){
-  this.firstName = firstName;
-  this.lastName = lastName;
-  this.email = email;
-  this.age = age;
-  this.isMale = isMale;
-  this.isSubscribed = isSubscribed;
+class Square extends Figure {
+  constructor (a) {
+    super ('Square');
+    this. a = a;
+  }
+  get a() {
+    return this._a;
+  }
+  set a (newValue) {
+    this._validateSide(newValue);
+    this._a = newValue;
+  }
+  getArea () {
+    return this.a * this.a;
+  }
 }
-const NATIONALITIES = [
-  'uk',
-  'us',
-  'bg',
-  'ru',
-  'uk',
-  'fr',
-]
-
-User.prototype = new UserProto();
-function UserProto(){
-this.getFullName = function(){
-  return `${this.firstName} ${this.lastName}`;
+class Circle extends Figure {
+  constructor (r) {
+    super ('Circle');
+    this.r = r;
+  }
+  get r () {
+    return this._r;
+  }
+  set r (newVAlue) {
+    this._validateSide(newValue);
+    this._r = newValue;
+  }
+  getArea () {
+    return Math.PI * this.r * this.r;
+  }
 }
-}
- function getRandomUsers (amount){
-   const usersArray = [];
-   for (let i = 0; i < amount; i++){
-     usersArray.push(
-       new User(
-         `Name${i}`, //first name
-         `Surname${i}`, // last name
-         `user${i}@gmail.com`, //email
-         getRandomIntInclusive(10, 50), // age
-         getRandomNationality(),
-         Math.random() < 0.5, // isMale
-         Math.random() <0.5 // isSubscribed
-       )
-     );
-   }
-   return usersArray;
- }
 
- function getRandomNationality(){
-   return NATIONALITIES [getRandomIntInclusive(0,NATIONALITIES.length - 1)];
- }
-
- const userList = getRandomUsers(100);
-
- function getSubscribedAdultWoman(arr){
- return arr.filter(function(user){
-  return user.age >= 18 && !user.isMale && user.isSubscribed;
-});
- }
- 
+const tr = new Triangle (5, 6, 30);
+const sq = new Square(5);
+const cr = new Circle(3);
